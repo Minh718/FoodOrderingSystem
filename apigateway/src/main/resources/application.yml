@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+app:
+  api-prefix: /api/v1
+  identity-service: http://localhost:8081/identity
+spring:
+  application:
+    name: api-gateway # Name of the gateway service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true # Enable dynamic routing via Eureka
+      routes:
+        - id: user-service
+          uri: lb://USER-SERVICE # Load balance using Eureka
+          predicates:
+            - Path=/users/** # Route all /users/* requests to User Service
+
+        - id: menu-service
+          uri: lb://MENU-SERVICE
+          predicates:
+            - Path=/menu/**
+
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/orders/**
+
+        - id: notification-service
+          uri: lb://NOTIFICATION-SERVICE
+          predicates:
+            - Path=/notification/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/ # Connect API Gateway to Eureka
+  instance:
+    prefer-ip-address: true
