@@ -1,0 +1,24 @@
+server:
+  port: 8085
+  servlet:
+    context-path: /notification
+spring:
+  application:
+    name: notification-service
+  #   data:
+  #     mongodb:
+  #       uri: mongodb://root:root@localhost:27017/notification-service?authSource=admin
+  kafka:
+    bootstrap-servers: localhost:9094
+    consumer:
+      group-id: notification-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+
+infobip:
+  base-url: https://wgk9pq.api.infobip.com
+  api-key: ${INFORBIP_KEY:fb27968f6f048c667943f438f8aee22c-9baced04-9ebe-43a8-8e59-be552728590c}
+  from: ServiceSMS
