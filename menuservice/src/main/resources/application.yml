@@ -1,0 +1,28 @@
+server:
+  port: 8083
+  servlet:
+    context-path: /menus
+spring:
+  application:
+    name: menu-service
+  datasource:
+    url: jdbc:h2:mem:menu-service
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/ # Connect API Gateway to Eureka
+  instance:
+    prefer-ip-address: true

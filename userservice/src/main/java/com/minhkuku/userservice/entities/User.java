@@ -36,4 +36,9 @@ public class User {
 
     @ManyToMany
     Set<Role> roles;
+
+    @ElementCollection
+    @CollectionTable(name = "user_followed_stores", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "store_id")
+    private Set<Long> followedStores; // Stores the IDs of followed shops
 }
